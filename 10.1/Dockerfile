@@ -5,7 +5,7 @@ FROM debian:jessie
 RUN groupadd -r mysql && useradd -r -g mysql mysql
 
 # install "pwgen" for randomizing passwords
-RUN apt-get update && apt-get install -y pwgen && rm -rf /var/lib/apt/lists/*
+RUN apt-get upgrade && apt-get update && apt-get install -y pwgen && apt-get install -y vim && rm -rf /var/lib/apt/lists/*
 
 RUN mkdir /docker-entrypoint-initdb.d
 
@@ -49,5 +49,5 @@ COPY docker-entrypoint.sh /
 
 ENTRYPOINT ["/docker-entrypoint.sh"]
 
-EXPOSE 3306
+EXPOSE 3307
 CMD ["mysqld"]
