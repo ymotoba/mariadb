@@ -2,15 +2,11 @@
 FROM debian:jessie
 
 # add our user and group first to make sure their IDs get assigned consistently, regardless of whatever dependencies get added
-RUN groupadd -r mysql && useradd -r -g mysql mysql
-
 # install "pwgen" for randomizing passwords
-RUN apt-get upgrade && apt-get update && apt-get install -y pwgen && apt-get install -y vim && rm -rf /var/lib/apt/lists/*
-
-RUN mkdir /docker-entrypoint-initdb.d
-
-# RUN apt-key adv --keyserver ha.pool.sks-keyservers.net --recv-keys 199369E5404BD5FC7D2FE43BCBCB082A1BB943DB
-RUN apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xcbcb082a1bb943db
+RUN groupadd -r mysql && useradd -r -g mysql mysql && \
+	apt-get upgrade && apt-get update && apt-get install -y pwgen && apt-get install -y vim && rm -rf /var/lib/apt/lists/* && \
+	mkdir /docker-entrypoint-initdb.d && \
+	apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xcbcb082a1bb943db
 
 ENV MARIADB_MAJOR 10.1
 ENV MARIADB_VERSION 10.1.11+maria-1~jessie
